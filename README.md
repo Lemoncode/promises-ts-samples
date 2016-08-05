@@ -20,8 +20,21 @@ In this sample we are going to hit the Github API perform a remote call using $A
 
 In this sample we are going to use something more uptodate "fetch", we will use a polyfill to cover browsers that doesn't support fetch.
 
-## 02 Using fetch and handling errors
+We are chaining promises and trapping errors using catch, more
+information about promises in this [link](http://exploringjs.com/es6/ch_promises.html)
 
-One of the nice things of using promises and fetch is
+## 02 Waiting for multiple promises to be resolved
 
-## 03 Waiting for multiple promises to be resolved
+In this sample we are running more than one async request in parallel. We just use the power of promises to wait for all of them
+to be completed and display a message (this could be used to, for example, display and spinner button or wait for all of them to be completed to perform some special operation).
+
+# How to run the samples
+
+1. Download this repo
+2. Install [NodeJS](http://www.nodejs.org)  
+3. Open the command line of your choice and cd to the root directory of this repo on your machine  
+4. Navigate (cd) to the subfolder where relies the sample you want
+to run.
+6. `npm install` - Installs packages (and will install as well typescript definitions)
+7. `npm start` - Builds the project and launch a lite web server (webpack-devserver).
+8. Open a browser and navigate to [http://localhost:8080/](http://localhost:8080/) if your browser doesn't open automatically.
