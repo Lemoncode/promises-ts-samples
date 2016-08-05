@@ -8,6 +8,7 @@
       "noLib": false,
       "suppressImplicitAnyIndexErrors": true
     },
+    "compileOnSave": false,
     "exclude": [
         "node_modules"
     ]
