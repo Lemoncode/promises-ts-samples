@@ -25,8 +25,8 @@ information about promises in this [link](http://exploringjs.com/es6/ch_promises
 
 ## 02 Waiting for multiple promises to be resolved
 
-In this sample we are running more than one async request in parallel. We just use the power of promises to wait for all of them
-to be completed and display a message (this could be used to, for example, display and spinner button or wait for all of them to be completed to perform some special operation).
+In this sample we are running more than one async request in parallel. We use the power of promises to wait for all of them
+to be completed and display a message (this could be used to, for example, display a spinner or wait for all of the promises to be completed to perform some special operation).
 
 # How to run the samples
 
