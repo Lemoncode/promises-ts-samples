@@ -4,6 +4,7 @@
   "description": "Lemoncode, Sample Promises $Aajx",
   "main": "index.js",
   "scripts": {
+    "postinstall": "typings install",
     "start": "webpack-dev-server --inline",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
