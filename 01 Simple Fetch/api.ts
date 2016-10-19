@@ -7,6 +7,7 @@ class GitHubAPI {
         .then((response) => this.checkStatus(response))
         .then((response) => this.parseJSON(response)
         .then((response) => {return Promise.resolve(this.mapGitHubMembersToMemberEntityCollection(response))})
+        .catch((error) => this.throwError(error))
       );
   }
 
@@ -35,10 +36,20 @@ class GitHubAPI {
       member.login = gitHubMember.login;
       member.avatar_url = gitHubMember.avatar_url;
 
+      // if (member.login='brauliodiez'){
+      //   let error = new Error(`<p>${member.login} shouldn't be in the response...</p>`);
+      //   throw error;
+      // }
       return member;
     });
 
     return members;
+  }
+
+  private throwError(error){
+    document.write("<p>Ops! something wrong! We are so embarrased..</p>");
+    console.log(error);
+    return Promise.reject(error);
   }
 }
 
