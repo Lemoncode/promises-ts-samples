@@ -64,8 +64,8 @@ member.id = gitHubMember.id;
 member.login = gitHubMember.login;
 member.avatar_url = gitHubMember.avatar_url;
 
-if (member.login='brauliodiez'){
-  let error = new Error(`<p>${member.login} shouldn't be in the response...</p>`);
+if (member.id=1457912){
+  let error = new Error(`<p>${member.id} shouldn't be in the response...</p>`);
   throw error;
 }
 return member;
