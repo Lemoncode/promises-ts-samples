@@ -8,5 +8,5 @@ export class MemberEntity {
     this.id = -1;
     this.login = "";
     this.avatar_url = "";
-  }
-}
+  };
+};

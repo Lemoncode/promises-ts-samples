@@ -1,5 +1,5 @@
 import { Promise } from "es6-promise";
-import {MemberEntity} from './model'
+import {MemberEntity} from './model';
 
 class GitHubAPI {
   getListOfMembers() {
@@ -18,7 +18,7 @@ class GitHubAPI {
     });
 
     return promise;
-  }
+  };
 
   private mapGitHubMembersToMemberEntityCollection(data)
   {
@@ -35,7 +35,7 @@ class GitHubAPI {
     });
 
     return members;
-  }
-}
+  };
+};
 
 export const gitHubAPI = new GitHubAPI();
