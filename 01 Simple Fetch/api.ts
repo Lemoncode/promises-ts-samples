@@ -1,5 +1,5 @@
 import { Promise } from "es6-promise";
-import {MemberEntity} from './model';
+import {MemberEntity} from './model'
 
 class GitHubAPI {
   getListOfMembers() : Promise<Array<MemberEntity>> {
@@ -12,23 +12,18 @@ class GitHubAPI {
   }
 
   private checkStatus(response : Response) : Promise<Response> {
-      if (response.status >= 200 && response.status < 300) {
-        return Promise.resolve(response);
-      } else {
-        let error = new Error(response.statusText);
-        throw error;
-      }
-  }
+     if (response.status >= 200 && response.status < 300) {
+       return Promise.resolve(response);
+     } else {
+       let error = new Error(response.statusText);
+       throw error;
+     }
+   }
 
-  private parseJSON(response : Response) : Promise<Response> {
+   private parseJSON(response : Response) : Promise<Response> {
       return response.json();
-  }
+    }
 
-  private throwError(error){
-    document.write("<p>Ops! something wrong! We are so embarrased..</p>");
-    console.log(error);
-    return Promise.reject(error);
-  }
 
   private mapGitHubMembersToMemberEntityCollection(data)
   {
@@ -39,17 +34,21 @@ class GitHubAPI {
 
       member.id = gitHubMember.id;
       member.login = gitHubMember.login;
-
       /* This sentence will provoke an error */
-      // if (member.id=1457912){
+      // if (member.id=1457912) {
       //   let error = new Error(`<p>${member.id} shouldn't be in the response...</p>`);
       //   throw error;
       // }
-
       return member;
     });
 
     return members;
+  }
+
+  private throwError(error){
+    document.write("<p>Ops! something wrong! We are so embarrased..</p>");
+    console.log(error);
+    return Promise.reject(error);
   }
 }
 
