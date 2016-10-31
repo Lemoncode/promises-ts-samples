@@ -15,14 +15,21 @@ We will start from sample [00 Simple Ajax] and we start using Fetch:
 
 ## Building the project
 
-We are going to install the dependencies. In this case, we have de same dependencies like the first sample, then we must run in command prompt:
+In this case, we have not the same dependencies like the first sample, then we must run in command prompt:
 
 ```Batch
 npm uninstall jquery --save
-npm install whatwg-fetch --save
-typings install dt~whatwg-fetch --save --global
-npm install
+npm uninstall --save @types/jquery
 ```
+
+We are going to install the dependencies.
+```
+npm install core-js --save
+npm install whatwg-fetch --save
+npm install --save @types/core-js
+npm install --save @types/whatwg-fetch
+npm install
+```exit
 
 ## Modify the sample: Chaining Promises
 
@@ -55,7 +62,7 @@ Also add the next functions:
 '''
 
 One of the great features of promises is the ability to chain them together. In this sample, we can have the need to check the status and parse de JSon for each response. And you can chain specifics methods for each step: First, check status, then, parse the object, and then convert a JS Object.
-At the end, you will answer with a promose.resolve.
+At the end, you will answer with a Promise.resolve.
 
 If something is wrong, you will enter by catch code.
 
@@ -78,7 +85,6 @@ And also, we are going to provoke the error if the name is Braulio, for example:
 // ... (in mapGitHubMembersToMemberEntityCollection method)
 member.id = gitHubMember.id;
 member.login = gitHubMember.login;
-member.avatar_url = gitHubMember.avatar_url;
 
 /* This sentence will provoke an error */
 if (member.id=1457912){

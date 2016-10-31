@@ -1,14 +1,16 @@
-import {MemberEntity} from "./model"
+import {MemberEntity} from "./model";
+import {gitHubAPI} from "./api";
 
-import {gitHubAPI} from "./api"
-
-// Consuming the promise
 gitHubAPI.getListOfMembers()
-  .then((response) =>
-    displayMembers(response)
+  .then(
+  (members: Array<MemberEntity>) => {
+      displayMembers(members);
+    }
   )
-  .catch((error) => handleError(error));
-
+  .catch((err) => {
+    document.write("Server error");
+  });
+  
 function displayMembers(members:Array<MemberEntity>)
 {
   document.write("<p><b>Sample members list:</b></p>")
@@ -16,9 +18,4 @@ function displayMembers(members:Array<MemberEntity>)
   members.forEach((member) => {
     document.write(`<p>${member.login}</p>`);
   });
-};
-
-function handleError(error)
-{
-  document.write(error);
 }
