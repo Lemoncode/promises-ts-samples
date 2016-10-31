@@ -13,7 +13,6 @@ First of all, we use $ajax to get some information from server and we will benef
 We will start from scratch.
 
 - Configure dependencies in package.json, installing the needed packages.
-- Configure typings.json
 - Configure loaders and plugins in webpack.config.js
 - Configure tsconfig.json
 - And let's understand the circuit of Promises.
@@ -32,20 +31,24 @@ npm init
 Let's start installing dev dependencies:
 
 ```
-npm install webpack html-webpack-plugin ts-loader typescript typings webpack-dev-server --save-dev
+npm install webpack html-webpack-plugin ts-loader typescript@2.0 webpack-dev-server --save-dev
 ```
-
 Now, we will install more dependencies but, not devDependencies.
 
 ```
-npm install es6-promise jquery --save
+npm install core-js jquery --save
+```
+
+Getting and using declaration files in 2.0 is much easier. To get declarations for a library like jquery, in command prompt:
+
+```
+npm install --save @types/jquery @types/core-js
 ```
 
 Now, we must configure some commands in our package.json with stripts entry:
 
 ```
 "scripts": {
-    "postinstall": "typings install",
     "start": "webpack-dev-server --inline",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -69,16 +72,6 @@ Let's create a file called _tsconfig.json_ where we will put the typescript conf
     ]
 }
 
-```
-
-Also, let's create other file called _typings.json_ and will put typings configuration.
-```javascript
-{
-  "globalDependencies": {
-    "es6-promise": "registry:dt/es6-promise#0.0.0+20160614011821",
-    "jquery": "registry:dt/jquery#1.10.0+20160704162008"
-  }
-}
 ```
 
 Now, we configure the _webpack.config.js_ file:
@@ -106,39 +99,40 @@ module.exports = {
   },
 }
 ```
-- Configuring plugin property:
 
-  ```javascript
-plugins:[
-  new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
-  new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery"
-  }),
-  //Generate index.html in /dist => https://github.com/ampedandwired/html-webpack-plugin
-  new HtmlWebpackPlugin({
-    filename: 'index.html', //Name of file in ./dist/
-    template: 'index.html', //Name of template in ./src
-    hash: true
-  })
-]
-```
 - Adding more configuration in webpack.config.js
 
 ```javascript
-resolve: {
-      extensions: ['', '.js', '.ts']
-},
-entry: {
-   vendor: ["jquery"],
-   app: "./index.ts"
-},
-output: {
+  resolve: {
+    extensions: ['', '.js', '.ts']
+  },
+  entry: {
+    vendor: ["jquery"],
+    app: "./index.ts"
+  },
+  output: {
   path: path.join(basePath, "dist"),
-  filename: "bundle.js"
-},
+    filename: "bundle.js"
+  },
+  devtool: 'source-map',
+```
 
-devtool: 'source-map',
+- Configuring plugin property:
+
+```javascript
+  plugins:[
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    }),
+    //Generate index.html in /dist => https://github.com/ampedandwired/html-webpack-plugin
+    new HtmlWebpackPlugin({
+      filename: 'index.html', //Name of file in ./dist/
+      template: 'index.html', //Name of template in ./src
+      hash: true
+    })
+  ]
 ```
 
 ## Understanding promises
@@ -154,7 +148,6 @@ export class MemberEntity {
   constructor() {
     this.id = -1;
     this.login = "";
-    this.avatar_url = "";
   }
 }
 ```
@@ -163,10 +156,10 @@ This is a simple sample. We can modify the constructor if we want.
 - Next, we create a _api.ts_ file, where we will call ajax with promises and we will transform the json received to Array Object.
   - First, import _promises_ and the _model_:
 
-  ```javascript
-    import { Promise } from "es6-promise";
-    import {MemberEntity} from './model';
-  ```
+```javascript
+import { Promise } from "core-js";
+import {MemberEntity} from './model';
+```
   - Second, let's create a _GitHubAPI_ class, with two methods: (1) In _getListOfMembers()_ we call ajax inside a promise definition. If all it's ok, then we will go into *success* property, calling the _mapGitHubMembersToMemberEntityCollection_ function. If something's wrong, then we must go into the *error* property, rejecting this. Don't forget binding this. The second method in _GitHubAPI_ class, _mapGitHubMembersToMemberEntityCollection_, we will transform JSonData to Array<MemberEntity> js Object. We will use the => expression.
 
   ```javascript
@@ -198,7 +191,6 @@ This is a simple sample. We can modify the constructor if we want.
 
         member.id = gitHubMember.id;
         member.login = gitHubMember.login;
-        member.avatar_url = gitHubMember.avatar_url;
 
         return member;
       });
@@ -221,22 +213,22 @@ This is a simple sample. We can modify the constructor if we want.
  - Now, we are going to cosume the promise (Call the promise and put  _then_ code and _catch_ code):
 
  ```javascript
- gitHubAPI.getListOfMembers()
-.then(
-    (members: Array<MemberEntity>) => {
-        displayMembers(members);
+gitHubAPI.getListOfMembers()
+  .then(
+  (members: Array<MemberEntity>) => {
+      displayMembers(members);
     }
-)
-.catch((err) => {
-  document.write("Server error");
-});
+  )
+  .catch((err) => {
+    document.write("Server error");
+  });
 ```
  When you go into the _then_ code, you have available the variable _members_. This is the return of the function that you called on sucess property, in this case, resolving _mapGitHubMembersToMemberEntityCollection_
 
  - We have also other function to print array(of MemberEntity) object: _displayMembers_
 
   ```javascript
- function displayMembers(members:Array<MemberEntity>)
+function displayMembers(members:Array<MemberEntity>)
 {
   document.write("<p><b>Sample members list:</b></p>")
 
@@ -265,7 +257,5 @@ To finalize the sample, we dump the javascript in a _index.html_ sample:
 
 Now, we can see the sample in the browser throwing this sentences in the command license
 ```Bash
-npm run postinstall
-
 npm start
 ```

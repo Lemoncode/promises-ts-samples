@@ -1,4 +1,4 @@
-import { Promise } from "es6-promise";
+import { Promise } from "core-js";
 import {MemberEntity} from './model';
 
 class GitHubAPI {
@@ -18,7 +18,7 @@ class GitHubAPI {
     });
 
     return promise;
-  };
+  }
 
   private mapGitHubMembersToMemberEntityCollection(data)
   {
@@ -29,13 +29,12 @@ class GitHubAPI {
 
       member.id = gitHubMember.id;
       member.login = gitHubMember.login;
-      member.avatar_url = gitHubMember.avatar_url;
 
       return member;
     });
 
     return members;
-  };
-};
+  }
+}
 
 export const gitHubAPI = new GitHubAPI();
