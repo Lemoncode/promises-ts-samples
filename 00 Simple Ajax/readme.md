@@ -32,7 +32,13 @@ npm init
 Let's start installing dev dependencies:
 
 ```
-npm install webpack html-webpack-plugin ts-loader typescript typings webpack-dev-server --save-dev
+npm install webpack html-webpack-plugin ts-loader typescript@2.0 webpack-dev-server --save-dev
+```
+
+Getting and using declaration files in 2.0 is much easier. To get declarations for a library like jquery, in command prompt:
+
+```
+npm install --save @types/jquery
 ```
 
 Now, we will install more dependencies but, not devDependencies.
@@ -45,7 +51,6 @@ Now, we must configure some commands in our package.json with stripts entry:
 
 ```
 "scripts": {
-    "postinstall": "typings install",
     "start": "webpack-dev-server --inline",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -71,16 +76,6 @@ Let's create a file called _tsconfig.json_ where we will put the typescript conf
 
 ```
 
-Also, let's create other file called _typings.json_ and will put typings configuration.
-```javascript
-{
-  "globalDependencies": {
-    "es6-promise": "registry:dt/es6-promise#0.0.0+20160614011821",
-    "jquery": "registry:dt/jquery#1.10.0+20160704162008"
-  }
-}
-```
-
 Now, we configure the _webpack.config.js_ file:
 - Adding variables:
 
@@ -104,8 +99,26 @@ module.exports = {
       }
     ]
   },
-}
+},
 ```
+
+- Adding more configuration in webpack.config.js
+
+```javascript
+resolve: {
+      extensions: ['', '.js', '.ts']
+},
+entry: {
+   vendor: ["jquery"],
+   app: "./index.ts"
+},
+output: {
+  path: path.join(basePath, "dist"),
+  filename: "bundle.js"
+},
+devtool: 'source-map',
+```
+
 - Configuring plugin property:
 
   ```javascript
@@ -123,23 +136,6 @@ plugins:[
   })
 ]
 ```
-- Adding more configuration in webpack.config.js
-
-```javascript
-resolve: {
-      extensions: ['', '.js', '.ts']
-},
-entry: {
-   vendor: ["jquery"],
-   app: "./index.ts"
-},
-output: {
-  path: path.join(basePath, "dist"),
-  filename: "bundle.js"
-},
-
-devtool: 'source-map',
-```
 
 ## Understanding promises
 
@@ -154,7 +150,6 @@ export class MemberEntity {
   constructor() {
     this.id = -1;
     this.login = "";
-    this.avatar_url = "";
   }
 }
 ```
@@ -198,7 +193,6 @@ This is a simple sample. We can modify the constructor if we want.
 
         member.id = gitHubMember.id;
         member.login = gitHubMember.login;
-        member.avatar_url = gitHubMember.avatar_url;
 
         return member;
       });
@@ -265,7 +259,5 @@ To finalize the sample, we dump the javascript in a _index.html_ sample:
 
 Now, we can see the sample in the browser throwing this sentences in the command license
 ```Bash
-npm run postinstall
-
 npm start
 ```
