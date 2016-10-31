@@ -2,14 +2,11 @@
 
 In this sample we are continuing to understand the promises concept, using typescript.
 
-We will start from sample [00 Simple Ajax] and we start using Fetch.
-
-[00 Simple Ajax]: https://github.com/Lemoncode/promises-ts-samples/tree/master/00%20Simple%20Ajax "Lemoncode GitHub"
-
-
 ## Steps to build it
 
-We will start from sample _00 simple ajax_:
+We will start from sample [00 Simple Ajax] and we start using Fetch:
+
+[00 Simple Ajax]: https://github.com/Lemoncode/promises-ts-samples/tree/master/00%20Simple%20Ajax "Lemoncode GitHub":
 
 - Install dependencies.
 - Modify the sample: Chaining Promises
@@ -21,6 +18,9 @@ We will start from sample _00 simple ajax_:
 We are going to install the dependencies. In this case, we have de same dependencies like the first sample, then we must run in command prompt:
 
 ```Batch
+npm uninstall jquery --save
+npm install whatwg-fetch --save
+typings install dt~whatwg-fetch --save --global
 npm install
 ```
 
@@ -37,6 +37,22 @@ getListOfMembers() : Promise<Array<MemberEntity>> {
     );
 }
 ```
+Also add the next functions:
+
+```javascript
+ private checkStatus(response : Response) : Promise<Response> {
+     if (response.status >= 200 && response.status < 300) {
+       return Promise.resolve(response);
+     } else {
+       let error = new Error(response.statusText);
+       throw error;
+     }
+ }
+
+  private parseJSON(response : Response) : Promise<Response> {
+      return response.json();
+  }
+'''
 
 One of the great features of promises is the ability to chain them together. In this sample, we can have the need to check the status and parse de JSon for each response. And you can chain specifics methods for each step: First, check status, then, parse the object, and then convert a JS Object.
 At the end, you will answer with a promose.resolve.
@@ -64,6 +80,7 @@ member.id = gitHubMember.id;
 member.login = gitHubMember.login;
 member.avatar_url = gitHubMember.avatar_url;
 
+/* This sentence will provoke an error */
 if (member.id=1457912){
   let error = new Error(`<p>${member.id} shouldn't be in the response...</p>`);
   throw error;
