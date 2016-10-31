@@ -1,4 +1,4 @@
-import { Promise } from "es6-promise";
+import { Promise } from "core-js";
 import {MemberEntity} from './model';
 
 class GitHubAPI {

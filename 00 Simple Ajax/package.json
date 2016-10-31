@@ -17,8 +17,9 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "@types/core-js": "^0.9.34",
     "@types/jquery": "^2.0.33",
-    "es6-promise": "^4.0.5",
+    "core-js": "^2.4.1",
     "jquery": "^3.1.1"
   }
 }

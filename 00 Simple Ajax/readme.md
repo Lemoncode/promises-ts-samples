@@ -13,7 +13,6 @@ First of all, we use $ajax to get some information from server and we will benef
 We will start from scratch.
 
 - Configure dependencies in package.json, installing the needed packages.
-- Configure typings.json
 - Configure loaders and plugins in webpack.config.js
 - Configure tsconfig.json
 - And let's understand the circuit of Promises.
@@ -34,17 +33,16 @@ Let's start installing dev dependencies:
 ```
 npm install webpack html-webpack-plugin ts-loader typescript@2.0 webpack-dev-server --save-dev
 ```
+Now, we will install more dependencies but, not devDependencies.
+
+```
+npm install core-js jquery --save
+```
 
 Getting and using declaration files in 2.0 is much easier. To get declarations for a library like jquery, in command prompt:
 
 ```
-npm install --save @types/jquery
-```
-
-Now, we will install more dependencies but, not devDependencies.
-
-```
-npm install es6-promise jquery --save
+npm install --save @types/jquery @types/core-js
 ```
 
 Now, we must configure some commands in our package.json with stripts entry:
@@ -159,7 +157,7 @@ This is a simple sample. We can modify the constructor if we want.
   - First, import _promises_ and the _model_:
 
 ```javascript
-import { Promise } from "es6-promise";
+import { Promise } from "core-js";
 import {MemberEntity} from './model';
 ```
   - Second, let's create a _GitHubAPI_ class, with two methods: (1) In _getListOfMembers()_ we call ajax inside a promise definition. If all it's ok, then we will go into *success* property, calling the _mapGitHubMembersToMemberEntityCollection_ function. If something's wrong, then we must go into the *error* property, rejecting this. Don't forget binding this. The second method in _GitHubAPI_ class, _mapGitHubMembersToMemberEntityCollection_, we will transform JSonData to Array<MemberEntity> js Object. We will use the => expression.
