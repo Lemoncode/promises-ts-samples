@@ -99,42 +99,42 @@ module.exports = {
       }
     ]
   },
-},
+}
 ```
 
 - Adding more configuration in webpack.config.js
 
 ```javascript
-resolve: {
-      extensions: ['', '.js', '.ts']
-},
-entry: {
-   vendor: ["jquery"],
-   app: "./index.ts"
-},
-output: {
+  resolve: {
+    extensions: ['', '.js', '.ts']
+  },
+  entry: {
+    vendor: ["jquery"],
+    app: "./index.ts"
+  },
+  output: {
   path: path.join(basePath, "dist"),
-  filename: "bundle.js"
-},
-devtool: 'source-map',
+    filename: "bundle.js"
+  },
+  devtool: 'source-map',
 ```
 
 - Configuring plugin property:
 
-  ```javascript
-plugins:[
-  new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
-  new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery"
-  }),
-  //Generate index.html in /dist => https://github.com/ampedandwired/html-webpack-plugin
-  new HtmlWebpackPlugin({
-    filename: 'index.html', //Name of file in ./dist/
-    template: 'index.html', //Name of template in ./src
-    hash: true
-  })
-]
+```javascript
+  plugins:[
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    }),
+    //Generate index.html in /dist => https://github.com/ampedandwired/html-webpack-plugin
+    new HtmlWebpackPlugin({
+      filename: 'index.html', //Name of file in ./dist/
+      template: 'index.html', //Name of template in ./src
+      hash: true
+    })
+  ]
 ```
 
 ## Understanding promises
@@ -158,10 +158,10 @@ This is a simple sample. We can modify the constructor if we want.
 - Next, we create a _api.ts_ file, where we will call ajax with promises and we will transform the json received to Array Object.
   - First, import _promises_ and the _model_:
 
-  ```javascript
-    import { Promise } from "es6-promise";
-    import {MemberEntity} from './model';
-  ```
+```javascript
+import { Promise } from "es6-promise";
+import {MemberEntity} from './model';
+```
   - Second, let's create a _GitHubAPI_ class, with two methods: (1) In _getListOfMembers()_ we call ajax inside a promise definition. If all it's ok, then we will go into *success* property, calling the _mapGitHubMembersToMemberEntityCollection_ function. If something's wrong, then we must go into the *error* property, rejecting this. Don't forget binding this. The second method in _GitHubAPI_ class, _mapGitHubMembersToMemberEntityCollection_, we will transform JSonData to Array<MemberEntity> js Object. We will use the => expression.
 
   ```javascript
@@ -215,22 +215,22 @@ This is a simple sample. We can modify the constructor if we want.
  - Now, we are going to cosume the promise (Call the promise and put  _then_ code and _catch_ code):
 
  ```javascript
- gitHubAPI.getListOfMembers()
-.then(
-    (members: Array<MemberEntity>) => {
-        displayMembers(members);
+gitHubAPI.getListOfMembers()
+  .then(
+  (members: Array<MemberEntity>) => {
+      displayMembers(members);
     }
-)
-.catch((err) => {
-  document.write("Server error");
-});
+  )
+  .catch((err) => {
+    document.write("Server error");
+  });
 ```
  When you go into the _then_ code, you have available the variable _members_. This is the return of the function that you called on sucess property, in this case, resolving _mapGitHubMembersToMemberEntityCollection_
 
  - We have also other function to print array(of MemberEntity) object: _displayMembers_
 
   ```javascript
- function displayMembers(members:Array<MemberEntity>)
+function displayMembers(members:Array<MemberEntity>)
 {
   document.write("<p><b>Sample members list:</b></p>")
 
