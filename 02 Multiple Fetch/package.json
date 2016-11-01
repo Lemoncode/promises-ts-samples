@@ -1,24 +1,25 @@
 {
   "name": "samplepromises",
   "version": "1.0.0",
-  "description": "Lemoncode, Sample Promises $Aajx",
+  "description": "Lemoncode, Sample Promises $Ajax",
   "main": "index.js",
   "scripts": {
-    "postinstall": "typings install",
     "start": "webpack-dev-server --inline",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \\\\\\\"Error: no test specified\\\\\\\" && exit 1"
   },
   "author": "Braulio Diez",
   "license": "MIT",
   "devDependencies": {
-    "html-webpack-plugin": "^2.22.0",
-    "ts-loader": "^0.8.2",
-    "typescript": "^1.8.10",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "html-webpack-plugin": "^2.24.1",
+    "ts-loader": "^0.9.5",
+    "typescript": "^2.0.6",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "es6-promise": "^3.2.1",
+    "@types/core-js": "^0.9.34",
+    "@types/whatwg-fetch": "0.0.32",
+    "core-js": "^2.4.1",
     "whatwg-fetch": "^1.0.0"
   }
 }

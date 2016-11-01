@@ -1,31 +1,39 @@
-import { Promise } from "es6-promise";
-import {MemberEntity, RepositoryEntity} from "./model"
+import { Promise } from "core-js";
 
-import {gitHubAPI} from "./api"
+import {MemberEntity, RepositoryEntity} from "./model";
+import {gitHubAPI} from "./api";
 
 const promises : Array<Promise<any>> = [];
 
 document.write("<p><b>async calls in progress</b></p>");
 
-// Consuming the promise
+// gitHubAPI.getListOfMembers()
+//   .then(
+//   (members: Array<MemberEntity>) => {
+//       displayMembers(members);
+//     }
+//   )
+//   .catch((err) => {
+//     document.write("Server error");
+//   });
+
 promises.push(gitHubAPI.getListOfMembers()
   .then((response) =>
     displayMembers(response))
-  );
-
+);
+  
 promises.push(gitHubAPI.getListOfRepositories()
    .then((response) =>
     displayRepositories(response)
- ));
+));
 
 Promise.all(promises)
-  .then(results => {
-      document.write("<p><b>All async calls sucessfully completed</b></p>");
-  })
-  .catch((error) => handleError(error))
-  ;
-
-function displayMembers(members : Array<MemberEntity>)
+.then(results => {
+    document.write("<p><b>All async calls sucessfully completed</b></p>");
+})
+.catch((error) => handleError(error));
+  
+function displayMembers(members:Array<MemberEntity>)
 {
   document.write("<p><b>Sample members list:</b></p>")
 
@@ -43,8 +51,7 @@ function displayRepositories(repositories : Array<RepositoryEntity>)
   });
 };
 
-
 function handleError(error)
 {
   document.write(error);
-}
+};
